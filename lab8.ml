@@ -208,7 +208,7 @@ the publications don't publish right away. *)
 Exercise 7: Remove the newswire listeners that were previously registered.
 ......................................................................*)
 
-let newswire = List.iter (WEvent.remove_listener newswire) [id1; id2] ;;
+List.iter (WEvent.remove_listener newswire) [id1; id2] ;;
 
 (*......................................................................
 Exercise 8: Create a new event called publish to signal that all
