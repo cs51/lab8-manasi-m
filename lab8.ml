@@ -135,7 +135,7 @@ one. If there is no listener with that id, do nothing.
   let rec remove_listener (evt : 'a event) (i : id) : unit =
     match !evt with 
     | [] -> ()
-    | hd :: tl -> if hd.id = i then evt := tl else remove_listener (ref tl) i
+    | hd :: tl -> if hd.id = i then ref (hd :: tl) := tl else remove_listener (ref tl) i
 
 (*......................................................................
 Exercise 3: Write fire_event, which will execute all event handlers
@@ -195,7 +195,7 @@ Exercise 6: Finally, fire newswire events with the above three
 headlines, and observe what happens!
 ......................................................................*)
   
-List.iter (WEvent.fire_event newswire) [h1; h2; h3] ;;
+let _ = List.iter (WEvent.fire_event newswire) [h1; h2; h3] ;;
 
 (* Imagine now that you work at Facebook, and you're growing concerned
 with the proliferation of fake news. To combat the problem, you decide
@@ -208,7 +208,7 @@ the publications don't publish right away. *)
 Exercise 7: Remove the newswire listeners that were previously registered.
 ......................................................................*)
 
-List.iter (WEvent.remove_listener newswire) [id1; id2] ;;
+let _ = List.iter (WEvent.remove_listener newswire) [id1; id2] ;;
 
 (*......................................................................
 Exercise 8: Create a new event called publish to signal that all
